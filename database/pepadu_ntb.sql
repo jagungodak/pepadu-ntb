@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2023-03-07 07:51:07
+Date: 2023-03-08 13:53:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -7423,19 +7423,19 @@ INSERT INTO `m_kode_propinsi` VALUES ('91', 'Papua');
 INSERT INTO `m_kode_propinsi` VALUES ('92', 'Papua Barat');
 
 -- ----------------------------
--- Table structure for tbl_hak_akses
+-- Table structure for tbl_kelompok_user
 -- ----------------------------
-DROP TABLE IF EXISTS `tbl_hak_akses`;
-CREATE TABLE `tbl_hak_akses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) NOT NULL,
-  `id_menu` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tbl_kelompok_user`;
+CREATE TABLE `tbl_kelompok_user` (
+  `idkelompok` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_kelompok` varchar(35) NOT NULL,
+  `menu` varchar(255) NOT NULL,
   `tampil` enum('1','0') NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`idkelompok`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
--- Records of tbl_hak_akses
+-- Records of tbl_kelompok_user
 -- ----------------------------
 
 -- ----------------------------
@@ -7516,16 +7516,19 @@ CREATE TABLE `tbl_user` (
   `userid` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `level` enum('superadmin','admin','op_kanwil','op_kab_kota','op_pt') DEFAULT 'admin',
+  `idkelompok` int(11) NOT NULL DEFAULT 0,
   `log_update` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `status` enum('0','1') NOT NULL DEFAULT '1' COMMENT '1=Aktif, 0=non aktif',
+  `nama_user` varchar(255) NOT NULL,
+  `login` enum('0','1') NOT NULL DEFAULT '0' COMMENT '1=sednag login; 0 =tidak login',
   PRIMARY KEY (`userid`,`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of tbl_user
 -- ----------------------------
-INSERT INTO `tbl_user` VALUES ('1', 'superadmin', '212', 'superadmin', null);
-INSERT INTO `tbl_user` VALUES ('2', 'admin', '212', 'admin', '2023-03-05 19:15:54');
-INSERT INTO `tbl_user` VALUES ('3', 'opkanwil', '212', 'op_kanwil', '2023-03-05 19:16:26');
-INSERT INTO `tbl_user` VALUES ('4', 'opkabkota', '212', 'op_kab_kota', '2023-03-05 19:16:34');
-INSERT INTO `tbl_user` VALUES ('5', 'oppt', '212', 'op_pt', null);
+INSERT INTO `tbl_user` VALUES ('1', 'administrator', 'b9c36bb0a8f5fd0e059ae248dafbd9b0', '1', '2023-03-08 11:09:00', '1', '', '0');
+INSERT INTO `tbl_user` VALUES ('2', 'admin', '1534b76d325a8f591b52d302e7181331', '2', '2023-03-08 09:44:00', '1', '', '0');
+INSERT INTO `tbl_user` VALUES ('3', 'opkanwil', '1534b76d325a8f591b52d302e7181331', '3', '2023-03-08 09:44:00', '1', '', '0');
+INSERT INTO `tbl_user` VALUES ('4', 'opkabkota', '1534b76d325a8f591b52d302e7181331', '4', '2023-03-08 09:44:01', '1', '', '0');
+INSERT INTO `tbl_user` VALUES ('5', 'oppt', '1534b76d325a8f591b52d302e7181331', '5', '2023-03-08 09:44:02', '1', '', '0');
