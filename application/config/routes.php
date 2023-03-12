@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -55,4 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 
 //LOGIN CONTROLLER
 $route['login'] = 'login';
-
+$route['pelimpahan'] = 'pelimpahan';
