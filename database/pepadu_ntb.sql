@@ -10,10 +10,43 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2023-03-08 13:53:52
+Date: 2023-04-02 14:12:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for m_kemenag
+-- ----------------------------
+DROP TABLE IF EXISTS `m_kemenag`;
+CREATE TABLE `m_kemenag` (
+  `kode` char(35) NOT NULL,
+  `nama_kab` varchar(255) NOT NULL,
+  `baris1` varchar(255) DEFAULT NULL,
+  `baris2` varchar(50) DEFAULT NULL,
+  `kepala` varchar(50) DEFAULT NULL,
+  `kota` varchar(50) DEFAULT NULL,
+  `nomor` varchar(35) DEFAULT NULL,
+  `nip` varchar(19) DEFAULT NULL,
+  `jabatan` varchar(50) DEFAULT NULL,
+  `unit_kerja` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`kode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of m_kemenag
+-- ----------------------------
+INSERT INTO `m_kemenag` VALUES ('dompu', 'Kantor Kementerian Agama Kabupaten Dompu', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('kabbima', 'Kantor Kementerian Agama Kabupaten Bima', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('kanwil', 'Kantor Wilayah Kementerian Agama Provinsi NTB', 'Jalan Udayana No. 6 Kota Mataram, Provinsi NTB', 'website: https://ntb.kemenag.go.id, e-mail: kanwil', 'H. Zamroni Aziz, S.HI.,MH.', 'Mataram', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('klu', 'Kantor Kementerian Agama Kabupaten Lombok Utara', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('kotabima', 'Kantor Kementerian Agama Kota Bima', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('ksb', 'Kantor Kementerian Agama Kabupaten Sumbawa Barat', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('lobar', 'Kantor Kementerian Agama Kabupaten Lombok Barat', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('loteng', 'Kantor Kementerian Agama Kabupaten Lombok Tengah', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('lotim', 'Kantor Kementerian Agama Kabupaten Lombok Timur', 'Jalan Udayana No. 6 Kota Mataram, Provinsi NTB', 'website: https://lotim.kemenag.go.id, email: kemen', 'H. Sirojudin, S.Ag.M.Ag', 'Selong', '/Ma.18.5/KU.00/', '196812311992011001', 'Kepala', 'Kantor Wilayah Kementerian Agama Kabupaten Lombok Timur');
+INSERT INTO `m_kemenag` VALUES ('mtr', 'Kantor Kementerian Agama Kota Mataram', '', null, '', '', '', '', '', '');
+INSERT INTO `m_kemenag` VALUES ('sbw', 'Kantor Kementerian Agama Kabupaten Sumbawa', '', null, '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for m_kode_kabupaten
@@ -7432,11 +7465,16 @@ CREATE TABLE `tbl_kelompok_user` (
   `menu` varchar(255) NOT NULL,
   `tampil` enum('1','0') NOT NULL DEFAULT '1',
   PRIMARY KEY (`idkelompok`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of tbl_kelompok_user
 -- ----------------------------
+INSERT INTO `tbl_kelompok_user` VALUES ('1', 'Superadmin', 'all', '1');
+INSERT INTO `tbl_kelompok_user` VALUES ('2', 'Admin', '1,2,10,11,3,7,8,9,5,12,13,14', '1');
+INSERT INTO `tbl_kelompok_user` VALUES ('3', 'Operator PHU', '1,3,7,8,9,5', '1');
+INSERT INTO `tbl_kelompok_user` VALUES ('4', 'Operator Kabupaten', '3,7,8,5,15', '1');
+INSERT INTO `tbl_kelompok_user` VALUES ('5', 'Operator CV-PT', '1,2,3,4,5,6,7,8,9,10', '1');
 
 -- ----------------------------
 -- Table structure for tbl_menu
@@ -7448,19 +7486,37 @@ CREATE TABLE `tbl_menu` (
   `link` varchar(255) NOT NULL,
   `induk` int(11) NOT NULL DEFAULT 0,
   `tampil` enum('0','1') NOT NULL DEFAULT '1',
+  `icon` varchar(255) DEFAULT NULL COMMENT 'menggunakan Font Awesome',
+  `level` smallint(2) NOT NULL DEFAULT 0,
+  `no_urut` smallint(6) DEFAULT 0,
   PRIMARY KEY (`id_menu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of tbl_menu
 -- ----------------------------
+INSERT INTO `tbl_menu` VALUES ('1', 'Dashboard', '', '0', '1', 'fa-dashboard', '1', '1');
+INSERT INTO `tbl_menu` VALUES ('2', 'Modul PTSP', '#', '0', '1', 'fa-bar-chart-o', '1', '2');
+INSERT INTO `tbl_menu` VALUES ('3', 'Modul PHU', '#', '0', '1', 'fa-wrench', '1', '3');
+INSERT INTO `tbl_menu` VALUES ('4', 'Modul Kepegawaian', '#', '0', '1', 'fa-sitemap', '1', '4');
+INSERT INTO `tbl_menu` VALUES ('5', 'System', '#', '0', '1', 'fa-gear', '1', '5');
+INSERT INTO `tbl_menu` VALUES ('6', 'Data PAK', 'data_pak', '4', '1', 'fa_list', '2', '4');
+INSERT INTO `tbl_menu` VALUES ('7', 'Pelimpahan Porsi Haji', '#', '3', '1', 'fa-truck', '2', '1');
+INSERT INTO `tbl_menu` VALUES ('8', 'Data Usulan Pelimpahan', 'pelimpahan', '7', '1', null, '3', '1');
+INSERT INTO `tbl_menu` VALUES ('9', 'Laporan Pelimpahan', 'pelimpahan/laporan', '7', '1', 'fa-newspaper-o', '3', '2');
+INSERT INTO `tbl_menu` VALUES ('10', 'Surat Masuk', 'suratMasuk', '2', '1', 'fa-file-text', '2', '1');
+INSERT INTO `tbl_menu` VALUES ('11', 'Surat Keluar', 'suratKeluar', '2', '1', 'fa-file-text-o', '2', '2');
+INSERT INTO `tbl_menu` VALUES ('12', 'Data User', 'user', '5', '1', 'fa-users', '2', '1');
+INSERT INTO `tbl_menu` VALUES ('13', 'Data Menu', 'dataMenu', '5', '1', 'fa-list', '2', '2');
+INSERT INTO `tbl_menu` VALUES ('14', 'Kelompok Pengguna', 'kelompokPengguna', '5', '1', 'fa-group', '2', '3');
+INSERT INTO `tbl_menu` VALUES ('15', 'Pengaturan', 'pengaturan', '5', '1', 'fa-setting', '1', '14');
 
 -- ----------------------------
 -- Table structure for tbl_pelimpahan
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_pelimpahan`;
 CREATE TABLE `tbl_pelimpahan` (
-  `data_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pelimpahan_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `jamaah_nik` varchar(16) NOT NULL,
   `jamaah_nama` varchar(100) NOT NULL,
   `jamaah_tptlahir` varchar(100) NOT NULL,
@@ -7471,7 +7527,7 @@ CREATE TABLE `tbl_pelimpahan` (
   `jamaah_kd_kab` varchar(2) NOT NULL,
   `jamaah_kd_provinsi` varchar(2) NOT NULL,
   `jamaah_no_porsi` varchar(35) NOT NULL,
-  `jamaah_jenis` enum('Wafat','Sakit Permanen') NOT NULL DEFAULT 'Wafat',
+  `jamaah_jenis` enum('Meninggal Dunia','Sakit Permanen') NOT NULL DEFAULT 'Meninggal Dunia',
   `jamaah_hub_keluarga` enum('Suami','Istri','Ayah','Ibu','Anak Kandung','Saudara Kandung') NOT NULL,
   `jamaah_tgl_wafat` date DEFAULT NULL,
   `pelimpahan_nik` varchar(16) DEFAULT NULL,
@@ -7485,10 +7541,11 @@ CREATE TABLE `tbl_pelimpahan` (
   `pelimpahan_kd_provinsi` varchar(2) DEFAULT NULL,
   `pelimpahan_hub_keluarga` enum('Suami','Istri','Ayah','Ibu','Anak Kandung','Saudara Kandung') DEFAULT NULL,
   `pelimpahan_nama_ayah` varchar(255) DEFAULT NULL,
-  `menggunakan_kuasa` enum('1','0') DEFAULT '0',
+  `menggunakan_kuasa` enum('1','0') NOT NULL DEFAULT '0',
+  `kuasa_nik` varchar(18) DEFAULT NULL,
   `kuasa_nama` varchar(100) DEFAULT NULL,
   `kuasa_tptlahir` varchar(100) DEFAULT NULL,
-  `kuasa_tgllhir` date DEFAULT NULL,
+  `kuasa_tgllahir` date DEFAULT NULL,
   `kuasa_hub_keluarga` enum('Suami','Istri','Ayah','Ibu','Anak Kandung','Saudara Kandung') DEFAULT NULL,
   `kuasa_kd_kecamatan` varchar(2) DEFAULT NULL,
   `kuasa_kd_kab` varchar(2) DEFAULT NULL,
@@ -7500,13 +7557,53 @@ CREATE TABLE `tbl_pelimpahan` (
   `tgl_surat` date DEFAULT NULL,
   `tgl_input` date DEFAULT NULL,
   `log_input` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `kuasa_jk` enum('L','P') DEFAULT 'L',
   `userid` int(11) NOT NULL,
-  PRIMARY KEY (`data_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `file1` varchar(255) DEFAULT NULL,
+  `file2` varchar(255) DEFAULT NULL,
+  `file3` varchar(255) DEFAULT NULL,
+  `file4` varchar(255) DEFAULT NULL,
+  `file5` varchar(255) DEFAULT NULL,
+  `file6` varchar(255) DEFAULT NULL,
+  `file7` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`pelimpahan_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of tbl_pelimpahan
 -- ----------------------------
+INSERT INTO `tbl_pelimpahan` VALUES ('2', '5201084106070012', 'FADHILA HUSNA ASRI', 'Mataram', '2023-03-18', 'L', 'asddasdasd', '07', '01', '52', '2000114457', 'Meninggal Dunia', 'Ibu', '2023-03-18', '5201232132131232', 'Nurul Imam', 'Ampenan', '2023-03-18', 'L', 'asdasdsad', null, '03', '52', 'Suami', 'Dodi', '', null, null, null, null, null, null, null, null, null, null, '1444', '2023', null, '2023-03-18', '2023-03-28 14:42:15', 'L', '4', '4a1fa4e777958b991f6da19ff4689f9c.pdf', '4001a00417415f09dbc8894c7ad39839.pdf', 'ee4f4b3cee24ddc1c659cecaf7ddc79a.png', '1adac298f255b91127ede7fceb346c3e.png', 'b8ced93d67a1ba0ffc0da733d1513c7d.png', '9588b0b3634164623dff42aa4c7b7666.pdf', '13a07f13824f18e34afe6654479b5b7e.pdf');
+INSERT INTO `tbl_pelimpahan` VALUES ('5', '5202143108040001', 'MUHAMAD SUKRI A', 'Mataram', '2023-03-27', 'L', 'ss', '03', '02', '52', '2000114459', 'Sakit Permanen', 'Suami', '2023-03-27', '5201232132131232', 'Jagungodak', 'Ampenan', '2023-03-27', 'L', 'zzxc', null, '09', '52', 'Anak Kandung', 'Dodi', '', null, null, null, null, null, null, null, null, null, null, '2023', '1444', null, '2023-03-28', '2023-03-28 14:42:14', 'L', '4', '2595724cce9eedeefdaa002d39532dc1.pdf', '61e8c9e8f45b7cc0b9c35c777eef997e.png', 'da54b144994e4d75149e33a8ee507a62.jpeg', null, null, null, null);
+INSERT INTO `tbl_pelimpahan` VALUES ('6', '5202053112780035', 'YUSRINA FITRIA RAHMAN', 'Mataram', '2023-03-28', 'L', 'Jalan Flamboyan No 1', '03', '02', '52', '2000114460', 'Meninggal Dunia', 'Suami', '2023-03-28', '52012321325555', 'Muhamad Adil', 'Ampenan', '2023-03-28', 'L', 'Jalan Flamboyan No 1', null, '04', '52', 'Suami', 'Yusro', '1', '5222201111', 'Husnul Yakin', 'Jakarta', '2023-03-28', 'Anak Kandung', '02', '02', '52', 'Jalan Flamboyan No 1', 'asdsad', '2023', '1444', null, '2023-03-28', '2023-03-28 06:05:16', 'L', '4', null, null, null, null, null, null, null);
+INSERT INTO `tbl_pelimpahan` VALUES ('7', '5201083112850001', 'MUHAMAD SUKRI', 'Mataram', '2023-03-29', 'L', 'Jln Soekarno Hatta', '09', '01', '52', '2000114461', 'Meninggal Dunia', 'Saudara Kandung', '2023-03-29', '5201232132131232', 'Muhamad Adil', 'Ampenan', '2023-03-29', 'L', 'Jln Soekarno Hatta', null, '18', '52', 'Ibu', 'Yusro', '', null, null, null, null, null, null, null, null, null, null, '2023', '1444', null, '2023-03-29', null, 'L', '4', null, null, null, null, null, null, null);
+
+-- ----------------------------
+-- Table structure for tbl_status_pelimpahan
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_status_pelimpahan`;
+CREATE TABLE `tbl_status_pelimpahan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` enum('Disetujui','Diteruskan','Ditolak','Diproses','Terkirim') NOT NULL DEFAULT 'Terkirim',
+  `tgl` datetime NOT NULL,
+  `pelimpahan_id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of tbl_status_pelimpahan
+-- ----------------------------
+INSERT INTO `tbl_status_pelimpahan` VALUES ('5', 'Terkirim', '2023-03-27 15:27:51', '2', '1', 'Pelimpahan dikirim ke Kanwil');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('6', 'Diproses', '2023-03-28 15:02:52', '2', '1', 'Diproses Kanwil');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('7', 'Terkirim', '2023-03-28 15:04:20', '6', '4', 'Pelimpahan dikirim ke Kanwil');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('8', 'Ditolak', '2023-03-28 15:09:28', '6', '1', 'Dokumen Belum lengkap');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('9', 'Terkirim', '2023-03-28 15:12:58', '6', '4', 'Pelimpahan dikirim ke Kanwil');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('10', 'Diteruskan', '2023-03-28 15:34:41', '2', '1', 'sadsadasdsad');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('11', 'Ditolak', '2023-03-28 15:36:47', '6', '1', 'fdsfsdfdsf');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('12', 'Terkirim', '2023-03-28 15:45:05', '5', '4', 'Pelimpahan dikirim ke Kanwil');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('13', 'Ditolak', '2023-04-02 15:03:41', '5', '2', 'belum lengkap');
+INSERT INTO `tbl_status_pelimpahan` VALUES ('14', 'Disetujui', '2023-04-02 15:04:13', '2', '2', 'disetujui');
 
 -- ----------------------------
 -- Table structure for tbl_user
@@ -7521,14 +7618,16 @@ CREATE TABLE `tbl_user` (
   `status` enum('0','1') NOT NULL DEFAULT '1' COMMENT '1=Aktif, 0=non aktif',
   `nama_user` varchar(255) NOT NULL,
   `login` enum('0','1') NOT NULL DEFAULT '0' COMMENT '1=sednag login; 0 =tidak login',
+  `kode_kab` char(35) NOT NULL,
   PRIMARY KEY (`userid`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of tbl_user
 -- ----------------------------
-INSERT INTO `tbl_user` VALUES ('1', 'administrator', 'b9c36bb0a8f5fd0e059ae248dafbd9b0', '1', '2023-03-08 11:09:00', '1', '', '0');
-INSERT INTO `tbl_user` VALUES ('2', 'admin', '1534b76d325a8f591b52d302e7181331', '2', '2023-03-08 09:44:00', '1', '', '0');
-INSERT INTO `tbl_user` VALUES ('3', 'opkanwil', '1534b76d325a8f591b52d302e7181331', '3', '2023-03-08 09:44:00', '1', '', '0');
-INSERT INTO `tbl_user` VALUES ('4', 'opkabkota', '1534b76d325a8f591b52d302e7181331', '4', '2023-03-08 09:44:01', '1', '', '0');
-INSERT INTO `tbl_user` VALUES ('5', 'oppt', '1534b76d325a8f591b52d302e7181331', '5', '2023-03-08 09:44:02', '1', '', '0');
+INSERT INTO `tbl_user` VALUES ('1', 'administrator', '1534b76d325a8f591b52d302e7181331', '1', '2023-04-02 09:00:51', '1', 'Administrator', '', 'kanwil');
+INSERT INTO `tbl_user` VALUES ('2', 'admin', '1534b76d325a8f591b52d302e7181331', '2', '2023-03-28 06:27:39', '1', 'Admin', '0', 'kanwil');
+INSERT INTO `tbl_user` VALUES ('3', 'opkanwil', '1534b76d325a8f591b52d302e7181331', '3', '2023-04-02 00:07:42', '1', 'Operator KAnwil', '0', 'kanwil');
+INSERT INTO `tbl_user` VALUES ('4', 'opkabkota', '1534b76d325a8f591b52d302e7181331', '4', '2023-04-02 14:02:47', '1', 'Operator Kab/Kota', '', 'lotim');
+INSERT INTO `tbl_user` VALUES ('5', 'oppt', '1534b76d325a8f591b52d302e7181331', '5', '2023-03-09 13:50:52', '1', 'Operator PT', '0', '');
+INSERT INTO `tbl_user` VALUES ('10', 'dompu', 'ab1a97cf6c61a95ebba4319c537db222', '4', null, '1', 'Dompu', '0', 'dompu');

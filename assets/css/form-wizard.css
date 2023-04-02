@@ -1,0 +1,65 @@
+.card2.show {
+	display: block !important;
+}
+
+.card2 {
+	display: none;
+}
+
+.step-container {
+	border-top: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
+	width: 100%;
+	margin-bottom: 20px;
+	margin-left: 0px;
+}
+
+.fa-circle {
+	background-color: lightgrey;
+	color: #fff;
+	padding: 2px 3.1555px;
+	border-radius: 50%;
+}
+
+.step-box {
+	padding: 10px;
+	border-left: 1px solid lightgrey;
+	border-right: 1px solid lightgrey;
+	background-color: #fff;
+}
+
+.active2 {
+	background-color: #2196f3;
+	color: #fff !important;
+	border-left: 1px solid #2196f3;
+	border-right: 1px solid #2196f3;
+}
+
+.active2 .fa-circle {
+	background-color: #fff !important;
+	color: #2196f3;
+}
+
+.fa-check {
+	border-radius: 50%;
+	background-color: #00c853;
+	color: #fff;
+	padding: 3px;
+}
+
+.step-title-0 {
+	margin-bottom: 0px;
+}
+
+.step-title {
+	font-size: 13px;
+	position: relative;
+	margin-left: 4px;
+}
+
+@media screen and (max-width: 768px) {
+	.break-line {
+		display: block;
+		float: none;
+	}
+}

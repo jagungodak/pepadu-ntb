@@ -56,3 +56,6 @@ $route['translate_uri_dashes'] = FALSE;
 //LOGIN CONTROLLER
 $route['login'] = 'login';
 $route['pelimpahan'] = 'pelimpahan';
+$route['dataMenu'] = 'menu';
+$route['kelompokPengguna'] = 'menu/kelompok';
+$route['pengaturan'] = 'user/pengaturan';

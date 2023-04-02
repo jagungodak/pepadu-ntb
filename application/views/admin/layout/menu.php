@@ -6,7 +6,8 @@ $menu2 = explode(",", $menu);
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="navbar-header">
-        <a class="navbar-brand" href="index.html">PEPADU NTB </a>
+        <a class="navbar-brand" href="index.html">PEPADU NTB
+        </a>
     </div>
 
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,12 +25,14 @@ $menu2 = explode(",", $menu);
 
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <?= $nama; ?> <b class="caret"></b>
+                <i class="fa fa-user fa-fw"></i>
+                <?= $nama; ?> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li><a href="<?= base_url('/pengaturan'); ?>"><i class="fa fa-user fa-fw"></i> User Profile</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Ubah Password</a>
+                <li><a href="<?= base_url('/pengaturan#password1'); ?>"><i class="fa fa-gear fa-fw"></i> Ubah
+                        Password</a>
                 </li>
                 <li class="divider"></li>
                 <li><a href="<?= base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -44,12 +47,14 @@ $menu2 = explode(",", $menu);
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
                     <h4>Selamat Datang</h4>
-                    <?php echo $nama; ?>
+                    <?php echo $nama;
+                    //print_r($menu2);
+                    ?>
 
                     <!-- /input-group -->
                 </li>
-                <!--
-                <li>
+                <!-- 
+                <li> 
                     <a href="<?= base_url(); ?>" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard </a>
                 </li> -->
 
@@ -57,41 +62,51 @@ $menu2 = explode(",", $menu);
                 $data = $CI->menuModel->getMenuInduk();
                 if ($data) {
                     foreach ($data as $key => $value) {
-                        if ($menuModel->cekSub($value->id_menu)) {
-                            echo ' <li>
+                        if (in_array($value->id_menu, $menu2) || $menu2[0] == 'all') {
+                            if ($menuModel->cekSub($value->id_menu)) {
+                                echo ' <li>
                                 <a href="' . base_url() . $value->link . '"><i class="fa ' . $value->icon . ' fa-fw"></i> ' . $value->nama_menu . '<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">';
-                            $data2 = $CI->menuModel->getMenuSub($value->id_menu);
-                            if ($data2) {
-                                foreach ($data2 as $key2 => $value2) {
-                                    if ($menuModel->cekSub($value2->id_menu)) {
-                                        echo '<li>
+                                $data2 = $CI->menuModel->getMenuSub($value->id_menu);
+                                if ($data2) {
+                                    foreach ($data2 as $key2 => $value2) {
+                                        if ($menuModel->cekSub($value2->id_menu)) {
+                                            echo '<li>
                                         <a href="' . base_url() . $value2->link . '">' . $value2->nama_menu . ' <span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">';
-                                        $data3 = $CI->menuModel->getMenuSub($value2->id_menu);
-                                        if ($data3) {
-                                            foreach ($data3 as $key3 => $value3) {
+                                            $data3 = $CI->menuModel->getMenuSub($value2->id_menu);
+                                            if ($data3) {
+                                                foreach ($data3 as $key3 => $value3) {
+                                                    if (in_array($value3->id_menu, $menu2) || $menu2[0] == 'all') {
+                                                        echo '<li>
+                                                        <a href="' . base_url() . $value3->link . '">' . $value3->nama_menu . '</a>
+                                                    </li>';
+                                                    }
+
+                                                }
+                                            }
+                                            echo '</ul>
+                                            </li>';
+                                        } else {
+                                            if (in_array($value2->id_menu, $menu2) || $menu2[0] == 'all') {
                                                 echo '<li>
-                                                    <a href="' . base_url() . $value3->link . '">' . $value3->nama_menu . '</a>
+                                                    <a href="' . base_url() . $value2->link . '">' . $value2->nama_menu . '</a>
                                                 </li>';
                                             }
+
                                         }
-                                        echo '</ul>
-                                            </li>';
-                                    } else {
-                                        echo '<li>
-                                            <a href="' . base_url() . $value2->link . '">' . $value2->nama_menu . '</a>
-                                        </li>';
                                     }
                                 }
-                            }
-                            echo '</ul>                                
+                                echo '</ul>                                
                             </li>';
-                        } else {
-                            echo ' <li>
-                    <a href="' . base_url() . $value->link . '" ><i class="fa ' . $value->icon . ' fa-fw"></i> ' . $value->nama_menu . ' </a>
-                </li>';
+                            } else {
+
+                                echo ' <li>
+                                    <a href="' . base_url() . $value->link . '" ><i class="fa ' . $value->icon . ' fa-fw"></i> ' . $value->nama_menu . ' </a>
+                                </li>';
+                            }
                         }
+
                     }
                 }
 

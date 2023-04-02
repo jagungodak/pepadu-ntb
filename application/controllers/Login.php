@@ -32,18 +32,20 @@ class Login extends CI_Controller
 		);
 		$username = $login['username'];
 		$password = md5($login['password']);
-		$query = $this->userModel->getOne($username);
+		$query = $this->userModel->getUsername($username);
 		if ($query) {
 			if ($query['password'] == $password) {
 				$kelompok = $this->hakAksesModel->getOne($query['idkelompok']);
 				//simpan session
 				$session = array(
-					'userid'	=> $query['userid'],
-					'username'	=> $query['username'],
-					'nama_user'		=> $query['nama_user'],
-					'idkelompok'	=> $query['idkelompok'],
-					'menu'	=> $kelompok['menu'],
-					'is_login' 	=> 'TRUE'
+					'userid' => $query['userid'],
+					'password' => $query['password'],
+					'username' => $query['username'],
+					'nama_user' => $query['nama_user'],
+					'idkelompok' => $query['idkelompok'],
+					'kab' => $query['kode_kab'],
+					'menu' => $kelompok['menu'],
+					'is_login' => 'TRUE'
 				);
 				$this->session->set_userdata($session);
 
@@ -61,6 +63,7 @@ class Login extends CI_Controller
 				$pesan = array(
 					'tipe' => 'error',
 					'success' => false,
+					'ket' => 'Password yang Dimasukan salah.<br>Silahkan dicoba menggunakan pasword yang lain.',
 					'pesan' => 'Password Salah'
 				);
 			}
@@ -69,6 +72,7 @@ class Login extends CI_Controller
 			$pesan = array(
 				'tipe' => 'error',
 				'success' => false,
+				'ket' => 'Username yang Dimasukan tidak ditemukan pada basisdata.Silahkan hubungi admin Kanwil.',
 				'pesan' => 'User Tidak Ditemukan'
 			);
 		}

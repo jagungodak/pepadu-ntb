@@ -3,7 +3,6 @@ class HakAksesModel extends CI_Model
 {
 	private $table = 'tbl_kelompok_user';
 	function __construct()
-
 	{
 
 		parent::__construct();
@@ -15,9 +14,9 @@ class HakAksesModel extends CI_Model
 	{
 		$this->db->select('*');
 		if ($limit == NULL) {
-			return $this->db->order_by('no_urut', 'ASC')->get($this->table)->result();
+			return $this->db->order_by('idkelompok', 'ASC')->get($this->table)->result();
 		} else {
-			return $this->db->limit($limit['perpage'], $limit['offset'])->order_by('no_urut', 'ASC')->get($this->table)->result();
+			return $this->db->limit($limit['perpage'], $limit['offset'])->order_by('idkelompok', 'ASC')->get($this->table)->result();
 		}
 	}
 	#admin
@@ -48,16 +47,17 @@ class HakAksesModel extends CI_Model
 	#insert
 	function insert($data)
 	{
-		$this->db->insert($this->table, $data);
+		return $this->db->insert($this->table, $data);
 	}
 	#update
 	function update($data, $id)
 	{
-		$this->db->update($this->table, $data, $id);
+		$this->db->where('idkelompok', $id);
+		return $this->db->update($this->table, $data);
 	}
 	#delete
 	function delete($data)
 	{
-		$this->db->delete($this->table, $data);
+		return $this->db->delete($this->table, $data);
 	}
 }
